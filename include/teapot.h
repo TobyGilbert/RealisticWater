@@ -7,7 +7,7 @@
 
 class Teapot{
 public:
-    Teapot();
+    Teapot(int _shader);
     ~Teapot();
     void init();
     void render();
@@ -15,7 +15,7 @@ public:
     void useReflect(glm::mat4 _modelMatrix, glm::mat4 _viewMatrix, glm::mat4 _projectionMatrix);
     void useRefract(glm::mat4 _modelMatrix, glm::mat4 _viewMatrix, glm::mat4 _projectionMatrix);
 private:
-    void createShader();
+    void createShader(int _shader);
     void createRefractShader();
     void createReflectShader();
     Model *m_model;
@@ -31,6 +31,9 @@ private:
     GLuint m_phongNormalLoc;
     GLuint m_phongMVPLoc;
     GLuint m_phongModelViewLoc;
+
+    // Clip
+    GLuint m_clipLoc;
 
 
 

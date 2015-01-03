@@ -14,8 +14,10 @@ uniform mat4 projectionMatrix;
 uniform mat4 modelViewProjectionMatrix;
 uniform int setting;
 
+float gl_ClipDistance[1];
 
 void main(){
+    gl_ClipDistance[0] = dot(modelMatrix * vec4(vertexPosition, 1.0), vec4(0.0, -1.0, 0.0, 0.0));
 
    normal = normalize(normalMatrix * vertexNormal);
    position = vec3(modelViewMatrix * vec4(vertexPosition, 1.0));

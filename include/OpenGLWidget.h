@@ -14,6 +14,7 @@
 #include "Model.h"
 #include "teapot.h"
 #include "Water.h"
+#include "Skybox.h"
 
 class OpenGLWidget : public QGLWidget
 {
@@ -127,6 +128,7 @@ private:
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Teapot object
     Teapot *m_teapot;
+    Teapot *m_reflectTeapot;
 
     void genFBOs();
     void renderReflections();
@@ -143,6 +145,9 @@ private:
     // Depth renderbuffers
     GLuint m_reflectDepth;
     GLuint m_refractDepth;
+
+    // Skybox
+    Skybox *m_skyBox;
 
 
 

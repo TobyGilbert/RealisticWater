@@ -24,6 +24,8 @@ OpenGLWidget::~OpenGLWidget(){
     delete m_cam;
     delete m_teapot;
     delete m_water;
+    delete m_skyBox;
+    delete m_reflectTeapot;
 }
 //----------------------------------------------------------------------------------------------------------------------
 void OpenGLWidget::initializeGL(){
@@ -34,7 +36,7 @@ void OpenGLWidget::initializeGL(){
     // enable multisampling for smoother drawing
     glEnable(GL_MULTISAMPLE);
 
-    //glEnable(GL_CLIP_DISTANCE0);
+    glEnable(GL_CLIP_DISTANCE0);
 
 
     // as re-size is not explicitly called we need to do this.
@@ -44,12 +46,16 @@ void OpenGLWidget::initializeGL(){
     m_cam = new Camera(glm::vec3(0.0, 1.0, 5.0));
 
     // initialize the water
-    m_teapot = new Teapot();
+    m_teapot = new Teapot(1);
+    m_reflectTeapot = new Teapot(0);
     m_water = new Water();
+    m_skyBox = new Skybox();
+    m_skyBox->loadCubeMap("textures/skyCubeMap", 0);
 
     genFBOs();
 
     startTimer(0);
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -95,7 +101,6 @@ void OpenGLWidget::genFBOs(){
 }
 
 void OpenGLWidget::renderReflections(){
-    glClearColor(1.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glViewport(0, 0, 512, 512);
@@ -111,15 +116,21 @@ void OpenGLWidget::renderReflections(){
     m_mouseGlobalTX[3][0] = m_modelPos.x;
     m_mouseGlobalTX[3][1] = m_modelPos.y;
     m_mouseGlobalTX[3][2] = m_modelPos.z;
-    glm::mat4 modelMatrix = glm::mat4();m_mouseGlobalTX;
+    glm::mat4 modelMatrix = m_mouseGlobalTX;
 
+
+    modelMatrix =m_mouseGlobalTX;
+    modelMatrix = glm::scale(modelMatrix, glm::vec3(10.0, -10.0, 10.0));
+    m_skyBox->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
+    m_skyBox->render();
+
+    modelMatrix = m_mouseGlobalTX;
     modelMatrix = glm::scale(modelMatrix, glm::vec3(1.0, -1.0, 1.0));
-    m_teapot->usePhong(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
-    m_teapot->render();
+    m_reflectTeapot->usePhong(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
+    m_reflectTeapot->render();
 }
 
 void OpenGLWidget::renderRefractions(){
-    glClearColor(0.0, 1.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glViewport(0, 0, 512, 512);
@@ -135,11 +146,18 @@ void OpenGLWidget::renderRefractions(){
     m_mouseGlobalTX[3][0] = m_modelPos.x;
     m_mouseGlobalTX[3][1] = m_modelPos.y;
     m_mouseGlobalTX[3][2] = m_modelPos.z;
-    glm::mat4 modelMatrix = glm::mat4();m_mouseGlobalTX;
+    glm::mat4 modelMatrix = m_mouseGlobalTX;
 
+
+    modelMatrix =m_mouseGlobalTX;
+    modelMatrix = glm::scale(modelMatrix, glm::vec3(10.0, 10.0, 10.0));
+    m_skyBox->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
+    m_skyBox->render();
+
+    modelMatrix =m_mouseGlobalTX;
     modelMatrix = glm::scale(modelMatrix, glm::vec3(1.0, 1.0, 1.0));
-    m_teapot->usePhong(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
-    m_teapot->render();
+    m_reflectTeapot->usePhong(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
+    m_reflectTeapot->render();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -169,10 +187,16 @@ void OpenGLWidget::paintGL(){
     m_mouseGlobalTX[3][2] = m_modelPos.z;
     glm::mat4 modelMatrix = m_mouseGlobalTX;
 
-    modelMatrix = glm::rotate(modelMatrix, 90.0f ,glm::vec3(1.0, 0.0, 0.0));
     m_water->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
     m_water->render();
 
+    modelMatrix = glm::scale(modelMatrix, glm::vec3(1.0, 1.0, 1.0));
+    m_teapot->usePhong(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
+    m_teapot->render();
+
+    modelMatrix = glm::scale(modelMatrix, glm::vec3(10.0, 10.0, 10.0));
+    m_skyBox->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
+    m_skyBox->render();
 
 }
 

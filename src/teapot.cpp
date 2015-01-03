@@ -2,8 +2,8 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-Teapot::Teapot(){
-    createShader();
+Teapot::Teapot(int _shader){
+    createShader(_shader);
     init();
 }
 
@@ -12,38 +12,77 @@ Teapot::~Teapot(){
     delete m_shaderProgram;;
 }
 
-void Teapot::createShader(){
-    m_shaderProgram = new ShaderProgram();
-    m_vertShader = new Shader("shaders/PhongVert.glsl", GL_VERTEX_SHADER);
-    m_fragShader = new Shader("shaders/PhongFrag.glsl", GL_FRAGMENT_SHADER);
-    m_shaderProgram->attachShader(m_vertShader);
-    m_shaderProgram->attachShader(m_fragShader);
-    m_shaderProgram->bindFragDataLocation(0, "fragColour");
-    m_shaderProgram->link();
-    m_shaderProgram->use();
+void Teapot::createShader(int _shader){
+    if (_shader == 0){
+        m_shaderProgram = new ShaderProgram();
+        m_vertShader = new Shader("shaders/reflectVert.glsl", GL_VERTEX_SHADER);
+        m_fragShader = new Shader("shaders/PhongFrag.glsl", GL_FRAGMENT_SHADER);
+        m_shaderProgram->attachShader(m_vertShader);
+        m_shaderProgram->attachShader(m_fragShader);
+        m_shaderProgram->bindFragDataLocation(0, "fragColour");
+        m_shaderProgram->link();
+        m_shaderProgram->use();
 
-    delete m_vertShader;
-    delete m_fragShader;
+        delete m_vertShader;
+        delete m_fragShader;
 
-    m_phongProjLoc = m_shaderProgram->getUniformLoc("projectionMatrix");
-    m_phongNormalLoc = m_shaderProgram->getUniformLoc("normalMatrix");
-    m_phongMVPLoc = m_shaderProgram->getUniformLoc("modelViewProjectionMatrix");
-    m_phongModelViewLoc = m_shaderProgram->getUniformLoc("modelViewMatrix");
-    m_phongModelLoc = m_shaderProgram->getUniformLoc("modelMatrix");
+        m_phongProjLoc = m_shaderProgram->getUniformLoc("projectionMatrix");
+        m_phongNormalLoc = m_shaderProgram->getUniformLoc("normalMatrix");
+        m_phongMVPLoc = m_shaderProgram->getUniformLoc("modelViewProjectionMatrix");
+        m_phongModelViewLoc = m_shaderProgram->getUniformLoc("modelViewMatrix");
+        m_phongModelLoc = m_shaderProgram->getUniformLoc("modelMatrix");
 
-    GLuint lightPosLoc = m_shaderProgram->getUniformLoc("light.position");
-    GLuint lightIntLoc = m_shaderProgram->getUniformLoc("light.intensity");
-    GLuint kdLoc = m_shaderProgram->getUniformLoc("Kd");
-    GLuint kaLoc = m_shaderProgram->getUniformLoc("Ka");
-    GLuint ksLoc = m_shaderProgram->getUniformLoc("Ks");
-    GLuint shininessLoc = m_shaderProgram->getUniformLoc("shininess");
+        m_clipLoc = m_shaderProgram->getUniformLoc("clip");
 
-    glUniform4f(lightPosLoc, 1.0, 1.0, 1.0, 1.0);
-    glUniform3f(lightIntLoc, 0.8, 0.8, 0.8);
-    glUniform3f(kdLoc, 0.5, 0.5, 0.5);
-    glUniform3f(kaLoc, 0.5, 0.5, 0.5);
-    glUniform3f(ksLoc, 1.0, 1.0, 1.0);
-    glUniform1f(shininessLoc, 100.0);
+        GLuint lightPosLoc = m_shaderProgram->getUniformLoc("light.position");
+        GLuint lightIntLoc = m_shaderProgram->getUniformLoc("light.intensity");
+        GLuint kdLoc = m_shaderProgram->getUniformLoc("Kd");
+        GLuint kaLoc = m_shaderProgram->getUniformLoc("Ka");
+        GLuint ksLoc = m_shaderProgram->getUniformLoc("Ks");
+        GLuint shininessLoc = m_shaderProgram->getUniformLoc("shininess");
+
+        glUniform4f(lightPosLoc, 1.0, 1.0, 1.0, 1.0);
+        glUniform3f(lightIntLoc, 0.6, 0.7, 0.8);
+        glUniform3f(kdLoc, 0.5, 0.5, 0.5);
+        glUniform3f(kaLoc, 0.5, 0.5, 0.5);
+        glUniform3f(ksLoc, 1.0, 1.0, 1.0);
+        glUniform1f(shininessLoc, 100.0);
+    }
+    else{
+        m_shaderProgram = new ShaderProgram();
+        m_vertShader = new Shader("shaders/PhongVert.glsl", GL_VERTEX_SHADER);
+        m_fragShader = new Shader("shaders/PhongFrag.glsl", GL_FRAGMENT_SHADER);
+        m_shaderProgram->attachShader(m_vertShader);
+        m_shaderProgram->attachShader(m_fragShader);
+        m_shaderProgram->bindFragDataLocation(0, "fragColour");
+        m_shaderProgram->link();
+        m_shaderProgram->use();
+
+        delete m_vertShader;
+        delete m_fragShader;
+
+        m_phongProjLoc = m_shaderProgram->getUniformLoc("projectionMatrix");
+        m_phongNormalLoc = m_shaderProgram->getUniformLoc("normalMatrix");
+        m_phongMVPLoc = m_shaderProgram->getUniformLoc("modelViewProjectionMatrix");
+        m_phongModelViewLoc = m_shaderProgram->getUniformLoc("modelViewMatrix");
+        m_phongModelLoc = m_shaderProgram->getUniformLoc("modelMatrix");
+
+        m_clipLoc = m_shaderProgram->getUniformLoc("clip");
+
+        GLuint lightPosLoc = m_shaderProgram->getUniformLoc("light.position");
+        GLuint lightIntLoc = m_shaderProgram->getUniformLoc("light.intensity");
+        GLuint kdLoc = m_shaderProgram->getUniformLoc("Kd");
+        GLuint kaLoc = m_shaderProgram->getUniformLoc("Ka");
+        GLuint ksLoc = m_shaderProgram->getUniformLoc("Ks");
+        GLuint shininessLoc = m_shaderProgram->getUniformLoc("shininess");
+
+        glUniform4f(lightPosLoc, 1.0, 1.0, 1.0, 1.0);
+        glUniform3f(lightIntLoc, 0.6, 0.7, 0.8);
+        glUniform3f(kdLoc, 0.5, 0.5, 0.5);
+        glUniform3f(kaLoc, 0.5, 0.5, 0.5);
+        glUniform3f(ksLoc, 1.0, 1.0, 1.0);
+        glUniform1f(shininessLoc, 100.0);
+    }
 }
 
 void Teapot::init(){
@@ -65,6 +104,7 @@ void Teapot::usePhong(glm::mat4 _modelMatrix, glm::mat4 _viewMatrix, glm::mat4 _
     glUniformMatrix4fv(m_phongProjLoc, 1, false, glm::value_ptr(_projectionMatrix));
     glUniformMatrix3fv(m_phongNormalLoc, 1, false, glm::value_ptr(normalMatrix));
     glUniformMatrix4fv(m_phongMVPLoc, 1, false, glm::value_ptr(modelViewProjectionMatrix));
+
 }
 
 void Teapot::render(){

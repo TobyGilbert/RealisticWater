@@ -4,6 +4,8 @@
 
 #include "ShaderProgram.h"
 #include "Model.h"
+#include "Texture.h"
+#include <QTime>
 class Water{
 public:
     Water();
@@ -27,6 +29,13 @@ private:
     GLuint m_refractLoc;
     GLuint m_reflectTex;
     GLuint m_refractTex;
+    Texture *m_normal;
+    Texture *m_dudv;
+
+    QTime m_timer;
+
+    // time
+    GLuint m_timeLoc;
 };
 
 #endif

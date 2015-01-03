@@ -1,6 +1,7 @@
 #include "TextureUtils.h"
 
 GLuint TextureUtils::createTexture(const GLchar *path){
+    ilInit();
    ILuint image = ilGenImage();
 
    ilBindImage(image);

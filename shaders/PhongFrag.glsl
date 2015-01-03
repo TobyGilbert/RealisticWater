@@ -15,7 +15,6 @@ uniform vec3 Ka;
 uniform vec3 Ks;
 uniform float shininess;
 
-
 out vec4 fragColour;
 
 vec3 ads(){

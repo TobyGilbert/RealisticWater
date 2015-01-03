@@ -24,7 +24,8 @@ SOURCES += \
     src/OpenGLWidget.cpp \
     src/Shader.cpp \
     src/teapot.cpp \
-    src/Water.cpp
+    src/Water.cpp \
+    src/Skybox.cpp
 
 
 HEADERS += \
@@ -39,7 +40,8 @@ HEADERS += \
     include/Shader.h \
     include/ui_mainwindow.h \
     include/teapot.h \
-    include/Water.h
+    include/Water.h \
+    include/Skybox.h
 
 INCLUDEPATH +=./include /opt/local/include
 LIBS += -L/opt/local/lib -lIL -lassimp
@@ -86,4 +88,7 @@ OTHER_FILES += \
     textures/skyCubeMap_posy.png \
     textures/skyCubeMap_posz.png \
     shaders/skyboxFrag.glsl \
-    shaders/skyboxVert.glsl
+    shaders/skyboxVert.glsl \
+    shaders/reflectVert.glsl \
+    textures/water_dudv.jpg \
+    textures/water_normal.jpg

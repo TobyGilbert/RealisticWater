@@ -56,7 +56,8 @@ SOURCES       = src/main.cpp \
 		src/OpenGLWidget.cpp \
 		src/Shader.cpp \
 		src/teapot.cpp \
-		src/Water.cpp moc/moc_mainwindow.cpp \
+		src/Water.cpp \
+		src/Skybox.cpp moc/moc_mainwindow.cpp \
 		moc/moc_OpenGLWidget.cpp
 OBJECTS       = obj/main.o \
 		obj/mainwindow.o \
@@ -70,6 +71,7 @@ OBJECTS       = obj/main.o \
 		obj/Shader.o \
 		obj/teapot.o \
 		obj/Water.o \
+		obj/Skybox.o \
 		obj/moc_mainwindow.o \
 		obj/moc_OpenGLWidget.o
 DIST          = /Users/Toby/Qt5.2.1/5.2.1/clang_64/mkspecs/features/spec_pre.prf \
@@ -468,7 +470,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d obj/Realistic_water.out1.0.0 || mkdir -p obj/Realistic_water.out1.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) obj/Realistic_water.out1.0.0/ && $(COPY_FILE) --parents include/mainwindow.h include/Camera.h include/ShaderUtils.h include/TextureUtils.h include/ShaderProgram.h include/Texture.h include/Model.h include/OpenGLWidget.h include/Shader.h include/ui_mainwindow.h include/teapot.h include/Water.h obj/Realistic_water.out1.0.0/ && $(COPY_FILE) --parents src/main.cpp src/mainwindow.cpp src/Camera.cpp src/ShaderUtils.cpp src/TextureUtils.cpp src/ShaderProgram.cpp src/Texture.cpp src/Model.cpp src/OpenGLWidget.cpp src/Shader.cpp src/teapot.cpp src/Water.cpp obj/Realistic_water.out1.0.0/ && $(COPY_FILE) --parents ui/mainwindow.ui obj/Realistic_water.out1.0.0/ && (cd `dirname obj/Realistic_water.out1.0.0` && $(TAR) Realistic_water.out1.0.0.tar Realistic_water.out1.0.0 && $(COMPRESS) Realistic_water.out1.0.0.tar) && $(MOVE) `dirname obj/Realistic_water.out1.0.0`/Realistic_water.out1.0.0.tar.gz . && $(DEL_FILE) -r obj/Realistic_water.out1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) obj/Realistic_water.out1.0.0/ && $(COPY_FILE) --parents include/mainwindow.h include/Camera.h include/ShaderUtils.h include/TextureUtils.h include/ShaderProgram.h include/Texture.h include/Model.h include/OpenGLWidget.h include/Shader.h include/ui_mainwindow.h include/teapot.h include/Water.h include/Skybox.h obj/Realistic_water.out1.0.0/ && $(COPY_FILE) --parents src/main.cpp src/mainwindow.cpp src/Camera.cpp src/ShaderUtils.cpp src/TextureUtils.cpp src/ShaderProgram.cpp src/Texture.cpp src/Model.cpp src/OpenGLWidget.cpp src/Shader.cpp src/teapot.cpp src/Water.cpp src/Skybox.cpp obj/Realistic_water.out1.0.0/ && $(COPY_FILE) --parents ui/mainwindow.ui obj/Realistic_water.out1.0.0/ && (cd `dirname obj/Realistic_water.out1.0.0` && $(TAR) Realistic_water.out1.0.0.tar Realistic_water.out1.0.0 && $(COMPRESS) Realistic_water.out1.0.0.tar) && $(MOVE) `dirname obj/Realistic_water.out1.0.0`/Realistic_water.out1.0.0.tar.gz . && $(DEL_FILE) -r obj/Realistic_water.out1.0.0
 
 
 clean:compiler_clean 
@@ -600,6 +602,11 @@ moc/moc_mainwindow.cpp: /Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtWidgets.framewo
 		include/Shader.h \
 		include/Model.h \
 		include/teapot.h \
+		include/Water.h \
+		include/Texture.h \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTime \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qdatetime.h \
+		include/Skybox.h \
 		include/mainwindow.h
 	/Users/Toby/Qt5.2.1/5.2.1/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 $(INCPATH) include/mainwindow.h -o moc/moc_mainwindow.cpp
 
@@ -704,6 +711,11 @@ moc/moc_OpenGLWidget.cpp: /Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtOpenGL.framew
 		include/Shader.h \
 		include/Model.h \
 		include/teapot.h \
+		include/Water.h \
+		include/Texture.h \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTime \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qdatetime.h \
+		include/Skybox.h \
 		include/OpenGLWidget.h
 	/Users/Toby/Qt5.2.1/5.2.1/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 $(INCPATH) include/OpenGLWidget.h -o moc/moc_OpenGLWidget.cpp
 
@@ -835,7 +847,12 @@ obj/main.o: src/main.cpp /Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtWidgets.framew
 		/opt/local/include/IL/il.h \
 		include/Shader.h \
 		include/Model.h \
-		include/teapot.h
+		include/teapot.h \
+		include/Water.h \
+		include/Texture.h \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTime \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qdatetime.h \
+		include/Skybox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
 obj/mainwindow.o: src/mainwindow.cpp include/mainwindow.h \
@@ -943,6 +960,11 @@ obj/mainwindow.o: src/mainwindow.cpp include/mainwindow.h \
 		include/Shader.h \
 		include/Model.h \
 		include/teapot.h \
+		include/Water.h \
+		include/Texture.h \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTime \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qdatetime.h \
+		include/Skybox.h \
 		include/ui_mainwindow.h \
 		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QFileDialog \
 		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qfiledialog.h
@@ -1431,7 +1453,12 @@ obj/OpenGLWidget.o: src/OpenGLWidget.cpp /Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/
 		/opt/local/include/IL/il.h \
 		include/Shader.h \
 		include/Model.h \
-		include/teapot.h
+		include/teapot.h \
+		include/Water.h \
+		include/Texture.h \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTime \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qdatetime.h \
+		include/Skybox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/OpenGLWidget.o src/OpenGLWidget.cpp
 
 obj/Shader.o: src/Shader.cpp include/Shader.h \
@@ -1610,8 +1637,195 @@ obj/teapot.o: src/teapot.cpp include/teapot.h \
 		/opt/local/include/glm/gtc/type_ptr.inl
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/teapot.o src/teapot.cpp
 
-obj/Water.o: src/Water.cpp 
+obj/Water.o: src/Water.cpp include/Water.h \
+		/opt/local/include/glm/glm.hpp \
+		/opt/local/include/glm/detail/_fixes.hpp \
+		/opt/local/include/glm/fwd.hpp \
+		/opt/local/include/glm/detail/type_int.hpp \
+		/opt/local/include/glm/detail/setup.hpp \
+		/opt/local/include/glm/detail/type_float.hpp \
+		/opt/local/include/glm/detail/type_vec.hpp \
+		/opt/local/include/glm/detail/precision.hpp \
+		/opt/local/include/glm/detail/type_mat.hpp \
+		/opt/local/include/glm/vec2.hpp \
+		/opt/local/include/glm/detail/type_vec2.hpp \
+		/opt/local/include/glm/detail/_swizzle.hpp \
+		/opt/local/include/glm/detail/_swizzle_func.hpp \
+		/opt/local/include/glm/detail/type_vec2.inl \
+		/opt/local/include/glm/vec3.hpp \
+		/opt/local/include/glm/detail/type_vec3.hpp \
+		/opt/local/include/glm/detail/type_vec3.inl \
+		/opt/local/include/glm/vec4.hpp \
+		/opt/local/include/glm/detail/type_vec4.hpp \
+		/opt/local/include/glm/detail/type_vec4.inl \
+		/opt/local/include/glm/mat2x2.hpp \
+		/opt/local/include/glm/detail/type_mat2x2.hpp \
+		/opt/local/include/glm/detail/type_mat2x2.inl \
+		/opt/local/include/glm/mat2x3.hpp \
+		/opt/local/include/glm/detail/type_mat2x3.hpp \
+		/opt/local/include/glm/detail/type_mat2x3.inl \
+		/opt/local/include/glm/mat2x4.hpp \
+		/opt/local/include/glm/detail/type_mat2x4.hpp \
+		/opt/local/include/glm/detail/type_mat2x4.inl \
+		/opt/local/include/glm/mat3x2.hpp \
+		/opt/local/include/glm/detail/type_mat3x2.hpp \
+		/opt/local/include/glm/detail/type_mat3x2.inl \
+		/opt/local/include/glm/mat3x3.hpp \
+		/opt/local/include/glm/detail/type_mat3x3.hpp \
+		/opt/local/include/glm/detail/type_mat3x3.inl \
+		/opt/local/include/glm/mat3x4.hpp \
+		/opt/local/include/glm/detail/type_mat3x4.hpp \
+		/opt/local/include/glm/detail/type_mat3x4.inl \
+		/opt/local/include/glm/mat4x2.hpp \
+		/opt/local/include/glm/detail/type_mat4x2.hpp \
+		/opt/local/include/glm/detail/type_mat4x2.inl \
+		/opt/local/include/glm/mat4x3.hpp \
+		/opt/local/include/glm/detail/type_mat4x3.hpp \
+		/opt/local/include/glm/detail/type_mat4x3.inl \
+		/opt/local/include/glm/mat4x4.hpp \
+		/opt/local/include/glm/detail/type_mat4x4.hpp \
+		/opt/local/include/glm/detail/type_mat4x4.inl \
+		/opt/local/include/glm/trigonometric.hpp \
+		/opt/local/include/glm/detail/func_trigonometric.hpp \
+		/opt/local/include/glm/detail/func_trigonometric.inl \
+		/opt/local/include/glm/detail/_vectorize.hpp \
+		/opt/local/include/glm/detail/type_vec1.hpp \
+		/opt/local/include/glm/detail/type_vec1.inl \
+		/opt/local/include/glm/exponential.hpp \
+		/opt/local/include/glm/detail/func_exponential.hpp \
+		/opt/local/include/glm/detail/func_exponential.inl \
+		/opt/local/include/glm/detail/func_vector_relational.hpp \
+		/opt/local/include/glm/detail/func_vector_relational.inl \
+		/opt/local/include/glm/common.hpp \
+		/opt/local/include/glm/detail/func_common.hpp \
+		/opt/local/include/glm/detail/func_common.inl \
+		/opt/local/include/glm/packing.hpp \
+		/opt/local/include/glm/detail/func_packing.hpp \
+		/opt/local/include/glm/detail/func_packing.inl \
+		/opt/local/include/glm/detail/type_half.hpp \
+		/opt/local/include/glm/detail/type_half.inl \
+		/opt/local/include/glm/geometric.hpp \
+		/opt/local/include/glm/detail/func_geometric.hpp \
+		/opt/local/include/glm/detail/func_geometric.inl \
+		/opt/local/include/glm/matrix.hpp \
+		/opt/local/include/glm/detail/func_matrix.hpp \
+		/opt/local/include/glm/detail/func_matrix.inl \
+		/opt/local/include/glm/vector_relational.hpp \
+		/opt/local/include/glm/integer.hpp \
+		/opt/local/include/glm/detail/func_integer.hpp \
+		/opt/local/include/glm/detail/func_integer.inl \
+		include/ShaderProgram.h \
+		/opt/local/include/GL/gl.h \
+		/opt/local/include/GL/gl_mangle.h \
+		/opt/local/include/GL/glext.h \
+		/opt/local/include/IL/il.h \
+		include/Shader.h \
+		include/Model.h \
+		include/Texture.h \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTime \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qdatetime.h \
+		/opt/local/include/glm/gtc/type_ptr.hpp \
+		/opt/local/include/glm/gtc/quaternion.hpp \
+		/opt/local/include/glm/gtc/constants.hpp \
+		/opt/local/include/glm/gtc/constants.inl \
+		/opt/local/include/glm/gtc/quaternion.inl \
+		/opt/local/include/glm/gtc/type_ptr.inl
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Water.o src/Water.cpp
+
+obj/Skybox.o: src/Skybox.cpp include/Skybox.h \
+		/opt/local/include/glm/glm.hpp \
+		/opt/local/include/glm/detail/_fixes.hpp \
+		/opt/local/include/glm/fwd.hpp \
+		/opt/local/include/glm/detail/type_int.hpp \
+		/opt/local/include/glm/detail/setup.hpp \
+		/opt/local/include/glm/detail/type_float.hpp \
+		/opt/local/include/glm/detail/type_vec.hpp \
+		/opt/local/include/glm/detail/precision.hpp \
+		/opt/local/include/glm/detail/type_mat.hpp \
+		/opt/local/include/glm/vec2.hpp \
+		/opt/local/include/glm/detail/type_vec2.hpp \
+		/opt/local/include/glm/detail/_swizzle.hpp \
+		/opt/local/include/glm/detail/_swizzle_func.hpp \
+		/opt/local/include/glm/detail/type_vec2.inl \
+		/opt/local/include/glm/vec3.hpp \
+		/opt/local/include/glm/detail/type_vec3.hpp \
+		/opt/local/include/glm/detail/type_vec3.inl \
+		/opt/local/include/glm/vec4.hpp \
+		/opt/local/include/glm/detail/type_vec4.hpp \
+		/opt/local/include/glm/detail/type_vec4.inl \
+		/opt/local/include/glm/mat2x2.hpp \
+		/opt/local/include/glm/detail/type_mat2x2.hpp \
+		/opt/local/include/glm/detail/type_mat2x2.inl \
+		/opt/local/include/glm/mat2x3.hpp \
+		/opt/local/include/glm/detail/type_mat2x3.hpp \
+		/opt/local/include/glm/detail/type_mat2x3.inl \
+		/opt/local/include/glm/mat2x4.hpp \
+		/opt/local/include/glm/detail/type_mat2x4.hpp \
+		/opt/local/include/glm/detail/type_mat2x4.inl \
+		/opt/local/include/glm/mat3x2.hpp \
+		/opt/local/include/glm/detail/type_mat3x2.hpp \
+		/opt/local/include/glm/detail/type_mat3x2.inl \
+		/opt/local/include/glm/mat3x3.hpp \
+		/opt/local/include/glm/detail/type_mat3x3.hpp \
+		/opt/local/include/glm/detail/type_mat3x3.inl \
+		/opt/local/include/glm/mat3x4.hpp \
+		/opt/local/include/glm/detail/type_mat3x4.hpp \
+		/opt/local/include/glm/detail/type_mat3x4.inl \
+		/opt/local/include/glm/mat4x2.hpp \
+		/opt/local/include/glm/detail/type_mat4x2.hpp \
+		/opt/local/include/glm/detail/type_mat4x2.inl \
+		/opt/local/include/glm/mat4x3.hpp \
+		/opt/local/include/glm/detail/type_mat4x3.hpp \
+		/opt/local/include/glm/detail/type_mat4x3.inl \
+		/opt/local/include/glm/mat4x4.hpp \
+		/opt/local/include/glm/detail/type_mat4x4.hpp \
+		/opt/local/include/glm/detail/type_mat4x4.inl \
+		/opt/local/include/glm/trigonometric.hpp \
+		/opt/local/include/glm/detail/func_trigonometric.hpp \
+		/opt/local/include/glm/detail/func_trigonometric.inl \
+		/opt/local/include/glm/detail/_vectorize.hpp \
+		/opt/local/include/glm/detail/type_vec1.hpp \
+		/opt/local/include/glm/detail/type_vec1.inl \
+		/opt/local/include/glm/exponential.hpp \
+		/opt/local/include/glm/detail/func_exponential.hpp \
+		/opt/local/include/glm/detail/func_exponential.inl \
+		/opt/local/include/glm/detail/func_vector_relational.hpp \
+		/opt/local/include/glm/detail/func_vector_relational.inl \
+		/opt/local/include/glm/common.hpp \
+		/opt/local/include/glm/detail/func_common.hpp \
+		/opt/local/include/glm/detail/func_common.inl \
+		/opt/local/include/glm/packing.hpp \
+		/opt/local/include/glm/detail/func_packing.hpp \
+		/opt/local/include/glm/detail/func_packing.inl \
+		/opt/local/include/glm/detail/type_half.hpp \
+		/opt/local/include/glm/detail/type_half.inl \
+		/opt/local/include/glm/geometric.hpp \
+		/opt/local/include/glm/detail/func_geometric.hpp \
+		/opt/local/include/glm/detail/func_geometric.inl \
+		/opt/local/include/glm/matrix.hpp \
+		/opt/local/include/glm/detail/func_matrix.hpp \
+		/opt/local/include/glm/detail/func_matrix.inl \
+		/opt/local/include/glm/vector_relational.hpp \
+		/opt/local/include/glm/integer.hpp \
+		/opt/local/include/glm/detail/func_integer.hpp \
+		/opt/local/include/glm/detail/func_integer.inl \
+		/opt/local/include/glm/gtc/type_ptr.hpp \
+		/opt/local/include/glm/gtc/quaternion.hpp \
+		/opt/local/include/glm/gtc/constants.hpp \
+		/opt/local/include/glm/gtc/constants.inl \
+		/opt/local/include/glm/gtc/quaternion.inl \
+		/opt/local/include/glm/gtc/type_ptr.inl \
+		include/Texture.h \
+		/opt/local/include/GL/gl.h \
+		/opt/local/include/GL/gl_mangle.h \
+		/opt/local/include/GL/glext.h \
+		/opt/local/include/IL/il.h \
+		include/ShaderProgram.h \
+		include/Shader.h \
+		include/Model.h \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtOpenGL.framework/Versions/5/Headers/QGLWidget \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtOpenGL.framework/Versions/5/Headers/qgl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Skybox.o src/Skybox.cpp
 
 obj/moc_mainwindow.o: moc/moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/moc_mainwindow.o moc/moc_mainwindow.cpp
