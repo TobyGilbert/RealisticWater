@@ -118,7 +118,6 @@ void OpenGLWidget::renderReflections(){
     m_mouseGlobalTX[3][2] = m_modelPos.z;
     glm::mat4 modelMatrix = m_mouseGlobalTX;
 
-
     modelMatrix =m_mouseGlobalTX;
     modelMatrix = glm::scale(modelMatrix, glm::vec3(10.0, -10.0, 10.0));
     m_skyBox->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
@@ -147,7 +146,6 @@ void OpenGLWidget::renderRefractions(){
     m_mouseGlobalTX[3][1] = m_modelPos.y;
     m_mouseGlobalTX[3][2] = m_modelPos.z;
     glm::mat4 modelMatrix = m_mouseGlobalTX;
-
 
     modelMatrix =m_mouseGlobalTX;
     modelMatrix = glm::scale(modelMatrix, glm::vec3(10.0, 10.0, 10.0));
